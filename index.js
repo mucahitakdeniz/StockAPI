@@ -12,3 +12,5 @@ require('express-async-errors')
 require('./src/configs/dbConnection')()
 
 app.use(express.json())
+
+app.use(require('./src/middlewares/logger'))
