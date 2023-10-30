@@ -14,3 +14,11 @@ require('./src/configs/dbConnection')()
 app.use(express.json())
 
 app.use(require('./src/middlewares/logger'))
+
+app.use(require('./src/middlewares/findSearchSortPage'))
+
+// errorHandler:
+app.use(require('./src/middlewares/findSearchSortPage'))
+
+// RUN SERVER:
+app.listen(PORT, HOST, () => console.log(`http://${HOST}:${PORT}`))
