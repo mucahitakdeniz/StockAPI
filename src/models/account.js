@@ -63,7 +63,7 @@ AccountSchema.pre(["save", "updateOne"], function (next) {
   );
   if (isEmailValidated) {
     const isPasswordValidated =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&].{8,}$/.test(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[-_@$!%*?&])[A-Za-z\d@$!%*?&].{8,}$/.test(
         data.password
       );
     if (isPasswordValidated) {
