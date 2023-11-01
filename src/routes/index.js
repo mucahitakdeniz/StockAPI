@@ -10,6 +10,12 @@ router.use('/firms',require('./firms'))
 router.use('/sales',require('./sales'))
 //purchases
 router.use('/purchases',require('./purchases'))
+//products
+router.use('/products',require('./products'))
+//brands
+router.use('/brands',require('./brands'))
+//categories
+router.use('/categories',require('./categories'))
 
 
 module.exports=router

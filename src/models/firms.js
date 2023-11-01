@@ -25,6 +25,7 @@ const FirmsSchema = new Schema(
     image: {
       type: String,
       trim: true,
+      default:[]
     },
   },
   {

@@ -12,14 +12,14 @@ const PurchasesSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Firms",
     },
-    // brand_idd: {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref:'Brand'
-    //   },
-    // product_id: {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref:'Product'
-    //   },
+    brand_idd: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref:'Brands'
+      },
+    product_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref:'Products'
+      },
 
     quantity: {
       type: Number,
