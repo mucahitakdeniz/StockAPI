@@ -2,15 +2,19 @@
 
 const mongoose = require("mongoose");
 
-const SalesSchema = new mongoose.Schema(
+const PurchaseSchema = new mongoose.Schema(
   {
     user_id: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Account",
     },
-    brand_idd: {
+    firm_id: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Brands",
+      ref: "Firm",
+    },
+    brand_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Brand",
     },
     product_id: {
       type: mongoose.Schema.Types.ObjectId,
@@ -19,29 +23,23 @@ const SalesSchema = new mongoose.Schema(
 
     quantity: {
       type: Number,
-      trim: true,
-      required: true,
+      default: 0,
     },
     price: {
       type: Number,
-      trim: true,
-      required: true,
+      default: 0,
     },
 
     price_total: {
       type: Number,
-      default: function () {
-        return this.price * this.quantity;
-      },
-      transform: function () {
-        return this.price * this.quantity;
-      },
+      default: function(){return this.price * this.quantity},
+      transform: function(){return this.price * this.quantity},
     },
   },
   {
-    collection: "sales",
+    collection: "purchase",
     timestamps: true,
   }
 );
 
-module.exports = mongoose.model("Sales", SalesSchema);
+module.exports = mongoose.model("Purchase", PurchaseSchema);

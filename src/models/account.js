@@ -21,13 +21,13 @@ const AccountSchema = new Schema(
       required: true,
       unique: true,
     },
-    firstName: {
+    first_name: {
       type: String,
       trim: true,
       required: true,
     },
 
-    lastName: {
+    last_name: {
       type: String,
       trim: true,
       required: true,
@@ -38,7 +38,7 @@ const AccountSchema = new Schema(
     },
     is_staff: {
       type: Boolean,
-      default: true,
+      default: false,
     },
     is_superadmin: {
       type: Boolean,
@@ -51,19 +51,18 @@ const AccountSchema = new Schema(
   }
 );
 
-
-/---------------------------------------------------------------/
+/---------------------------------------------------------------/;
 const passwordEncrypt = require("../helpers/passwordEncrypt");
 
 AccountSchema.pre(["save", "updateOne"], function (next) {
   const data = this._update || this;
 
-  const isEmailValidated = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(
-    data.email
-  );
+  const isEmailValidated = data.email
+    ? /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(data.email) // test from "data".
+    : true;
   if (isEmailValidated) {
     const isPasswordValidated =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[-_@$!%*?&])[A-Za-z\d@$!%*?&].{8,}$/.test(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[-_.:,;/\*+-@$!%*?&]).{8,}$/.test(
         data.password
       );
     if (isPasswordValidated) {
@@ -78,6 +77,9 @@ AccountSchema.pre(["save", "updateOne"], function (next) {
     next(new Error("Email not validated"));
   }
 });
-/------------------------------------------------------------------/
+AccountSchema.pre('init',function(data){
+  data.id=this._id
+})
+////------------------------------------------------------------------/
 
-module.exports=model('Account',AccountSchema)
+module.exports = model("Account", AccountSchema);

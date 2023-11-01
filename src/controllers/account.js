@@ -5,14 +5,13 @@ const Account = require("../models/account");
 module.exports = {
   list: async (req, res) => {
     const data = await res.getModelList(Account);
-    res.status(200).send({
-      error: false,
-      details: await res.getModelListDetails(Account),
-      data,
-    });
+    res.status(200).send(data);
   },
   create: async (req, res) => {
+    req.body.is_staff = false;
+    req.body.is_superadmin = false;
     const data = await Account.create(req.body);
+
     res.status(201).send({
       error: false,
       data,
@@ -26,10 +25,13 @@ module.exports = {
     });
   },
   update: async (req, res) => {
+    req.body.is_staff = false;
+    req.body.is_superadmin = false;
     const data = await Account.updateOne({ _id: req.params.id }, req.body);
     res.status(202).send({
       error: false,
       data,
+      new: await Account.findOne({ _id: req.params.id }),
     });
   },
   delete: async (req, res) => {

@@ -1,7 +1,7 @@
 "use strict";
 
 const router = require("express").Router();
-const purchases = require("../controllers/purchases");
+const purchases = require("../controllers/purchase");
 
 router.route("/").get(purchases.list).post(purchases.create);
 

@@ -5,24 +5,24 @@ const mongoose = require("mongoose");
 const ProductsSchema = new mongoose.Schema(
   {
     brand_id: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref:'Brand'
-      },
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Brand",
+      required: true,
+    },
     category_id: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref:'Categories'
-      },
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Categories",
+      required: true,
+    },
 
     name: {
       type: String,
       trim: true,
       required: true,
-      unique: true,
     },
-    quantity: {
+    stock: {
       type: Number,
-      trim: true,
-      required: true,
+      default: 0,
     },
   },
   {

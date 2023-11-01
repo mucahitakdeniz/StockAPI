@@ -1,39 +1,39 @@
 "use strict";
 
-const Brands = require("../models/brands");
+const Purchase = require("../models/purchase");
 
 module.exports = {
   list: async (req, res) => {
-    const data = await res.getModelList(Brands);
+    const data = await res.getModelList(Purchase);
     res.status(200).send({
       error: false,
-      details: await res.getModelListDetails(Brands),
+      details: await res.getModelListDetails(Purchase),
       data,
     });
   },
   create: async (req, res) => {
-    const data = await Brands.create(req.body);
+    const data = await Purchase.create(req.body);
     res.status(201).send({
       error: false,
       data,
     });
   },
   read: async (req, res) => {
-    const data = await Brands.findOne({ _id: req.params.id });
+    const data = await Purchase.findOne({ _id: req.params.id });
     res.status(200).send({
       error: false,
       data,
     });
   },
   update: async (req, res) => {
-    const data = await Brands.updateOne({ _id: req.params.id }, req.body);
+    const data = await Purchase.updateOne({ _id: req.params.id }, req.body);
     res.status(202).send({
       error: false,
       data,
     });
   },
   delete: async (req, res) => {
-    const data = await Brands.deleteOne({ _id: req.params.id }, req.body);
+    const data = await Purchase.deleteOne({ _id: req.params.id }, req.body);
     res.status(data.deletedCount ? 204 : 404).send({
       error: false,
       data,
