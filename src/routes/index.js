@@ -9,7 +9,7 @@ router.use('/firms',require('./firms'))
 //sales
 router.use('/sales',require('./sales'))
 //purchases
-router.use('/sales',require('./sales'))
+router.use('/purchases',require('./purchases'))
 
 
 module.exports=router
