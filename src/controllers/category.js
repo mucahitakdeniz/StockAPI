@@ -1,12 +1,12 @@
 "use strict";
 
-const Products = require("../models/products");
+const Categories = require("../models/category");
 
 module.exports = {
   list: async (req, res) => {
     /*
-            #swagger.tags = ["Products"]
-            #swagger.summary = "List Products"
+            #swagger.tags = ["Categories"]
+            #swagger.summary = "List Categories"
             #swagger.description = `
                 You can send query with endpoint for search[], sort[], page and limit.
                 <ul> Examples:
@@ -16,60 +16,59 @@ module.exports = {
                 </ul>
             `
         */
-    const data = await res.getModelList(Products);
+    const data = await res.getModelList(Categories);
     res.status(200).send(data);
   },
   create: async (req, res) => {
     /*
-            #swagger.tags = ["Products"]
-            #swagger.summary = "Create Product"
+            #swagger.tags = ["Categories"]
+            #swagger.summary = "Create Category"
             #swagger.parameters['body'] = {
                 in: 'body',
                 required: true,
                 schema: {
-                  "category_id":"6549"
-                  "brand_id":"1235",
-                  "name": "New",
-                  "stock":"0"                }
+                    "name": "A catefgory"
+                }
             }
         */
-    const data = await Products.create(req.body);
+    const data = await Categories.create(req.body);
     res.status(201).send({
       error: false,
       data,
     });
   },
   read: async (req, res) => {
-     /*
-            #swagger.tags = ["Products"]
-            #swagger.summary = "Get Single Product"
+    /*
+            #swagger.tags = ["Categories"]
+            #swagger.summary = "Get Single Category"
         */
-    const data = await Products.findOne({ _id: req.params.id });
+    const data = await Categories.findOne({ _id: req.params.id });
     res.status(200).send(data);
   },
   update: async (req, res) => {
     /*
-            #swagger.tags = ["Products"]
-            #swagger.summary = "Update Product"
+            #swagger.tags = ["Categories"]
+            #swagger.summary = "Update Category"
             #swagger.parameters['body'] = {
                 in: 'body',
                 required: true,
-                schema: {  
-                  "category_id":"6549"
-                  "brand_id":"1235",
-                  "name": "New",
-                  "stock":"0"  
+                schema: {
+                    "name": "A catefgory"
                 }
             }
         */
-    const data = await Products.updateOne({ _id: req.params.id }, req.body);
+    const data = await Categories.updateOne({ _id: req.params.id }, req.body);
     res.status(202).send({
       error: false,
       data,
     });
   },
   delete: async (req, res) => {
-    const data = await Products.deleteOne({ _id: req.params.id }, req.body);
+    /*
+            #swagger.tags = ["Categories"]
+            #swagger.summary = "Delete Category"
+        */
+    const data = await Categories.deleteOne({ _id: req.params.id }, req.body);
     res.status(data.deletedCount ? 204 : 404).send({
       error: false,
       data,

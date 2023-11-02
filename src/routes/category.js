@@ -1,7 +1,7 @@
 "use strict";
 
 const router = require("express").Router();
-const categories = require("../controllers/categories");
+const categories = require("../controllers/category");
 
 router.route("/").get(categories.list).post(categories.create);
 

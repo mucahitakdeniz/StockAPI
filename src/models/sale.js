@@ -2,7 +2,7 @@
 
 const mongoose = require("mongoose");
 
-const SalesSchema = new mongoose.Schema(
+const SaleSchema = new mongoose.Schema(
   {
     user_id: {
       type: mongoose.Schema.Types.ObjectId,
@@ -10,11 +10,11 @@ const SalesSchema = new mongoose.Schema(
     },
     brand_idd: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Brands",
+      ref: "Brand",
     },
     product_id: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Products",
+      ref: "Product",
     },
 
     quantity: {
@@ -39,9 +39,13 @@ const SalesSchema = new mongoose.Schema(
     },
   },
   {
-    collection: "sales",
+    collection: "sale",
     timestamps: true,
   }
 );
+SaleSchema.pre('init', function (data) {
+  data.id = data._id
+  data.createds = data.createdAt.toLocaleDateString('tr-tr')
+})
 
-module.exports = mongoose.model("Sales", SalesSchema);
+module.exports = mongoose.model("Sale", SaleSchema);

@@ -9,6 +9,7 @@ const AccountSchema = new Schema(
       trim: true,
       required: true,
       unique: true,
+      index: true,
     },
     password: {
       type: String,
@@ -20,6 +21,7 @@ const AccountSchema = new Schema(
       trim: true,
       required: true,
       unique: true,
+      index: true,
     },
     first_name: {
       type: String,
@@ -51,14 +53,14 @@ const AccountSchema = new Schema(
   }
 );
 
-/---------------------------------------------------------------/;
+//---------------------------------------------------------------/;
 const passwordEncrypt = require("../helpers/passwordEncrypt");
 
 AccountSchema.pre(["save", "updateOne"], function (next) {
   const data = this._update || this;
 
   const isEmailValidated = data.email
-    ? /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(data.email) // test from "data".
+    ? /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(data.email)
     : true;
   if (isEmailValidated) {
     const isPasswordValidated =
@@ -77,9 +79,12 @@ AccountSchema.pre(["save", "updateOne"], function (next) {
     next(new Error("Email not validated"));
   }
 });
-AccountSchema.pre('init',function(data){
-  data.id=this._id
+AccountSchema.pre("init", function (data) {
+  data.id = this._id
+  data.createds=data.createAt.toLocaleDateString('tr-tr')
 })
-////------------------------------------------------------------------/
+
+//---------------------------------------------------------------/;
+
 
 module.exports = model("Account", AccountSchema);

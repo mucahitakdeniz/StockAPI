@@ -6,22 +6,24 @@ const BrandSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      trim:true,
-      require:true,
+      trim: true,
+      require: true,
       unique: true,
     },
-    
+
     image: {
       type: String,
       trim: true,
-      default:[]
     },
-   
   },
   {
     collection: "brand",
     timestamps: true,
   }
 );
+BrandSchema.pre("init", function (data) {
+  data.id = data._id;
+  data.createds = data.createdAt.toLocaleDateString("tr-tr");
+});
 
 module.exports = mongoose.model("Brand", BrandSchema);

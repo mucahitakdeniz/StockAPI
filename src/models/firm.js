@@ -2,7 +2,7 @@
 
 const { Schema, model } = require("mongoose");
 
-const FirmsSchema = new Schema(
+const FirmSchema = new Schema(
   {
     name: {
       type: String,
@@ -32,4 +32,9 @@ const FirmsSchema = new Schema(
   }
 );
 
-module.exports = model("Firms", FirmsSchema);
+FirmSchema.pre('init', function(data) {
+  data.id = data._id
+  data.createds = data.createdAt.toLocaleDateString('tr-tr')
+})
+
+module.exports = model("Firm", FirmSchema);

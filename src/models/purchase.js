@@ -18,7 +18,7 @@ const PurchaseSchema = new mongoose.Schema(
     },
     product_id: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Products",
+      ref: "Product",
     },
 
     quantity: {
@@ -41,5 +41,9 @@ const PurchaseSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
+PurchaseSchema.pre('init', function (data) {
+  data.id = data._id
+  data.createds = data.createdAt.toLocaleDateString('tr-tr')
+})
 
 module.exports = mongoose.model("Purchase", PurchaseSchema);

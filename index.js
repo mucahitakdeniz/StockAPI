@@ -12,6 +12,7 @@ require('express-async-errors')
 // Connect to DB:
 require('./src/configs/dbConnection')()
 
+//Accept JSON
 app.use(express.json())
 
 // Run Logger:
@@ -21,7 +22,24 @@ app.use(require('./src/middlewares/logger'))
 app.use(require('./src/middlewares/findSearchSortPage'))
 
 //routes
+
+// HomePath:
+app.all('/', (req, res) => {
+    res.send({
+        error: false,
+        message: 'Welcome to Stock Management API',
+        documents: {
+            swagger: '/documents/swagger',
+            redoc: '/documents/redoc',
+            json: '/documents/json',
+        },
+        user: req.user
+    })
+})
+
 app.use(require('./src/routes'))
+
+
 
 // errorHandler:
 app.use(require('./src/middlewares/errorHandler'))
