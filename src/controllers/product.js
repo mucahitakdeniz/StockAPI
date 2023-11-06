@@ -16,7 +16,7 @@ module.exports = {
                 </ul>
             `
         */
-    const data = await res.getModelList(Products);
+    const data = await res.getModelList(Products,{},['category_id','brand_id']);
     res.status(200).send(data);
   },
   create: async (req, res) => {
@@ -44,7 +44,7 @@ module.exports = {
             #swagger.tags = ["Products"]
             #swagger.summary = "Get Single Product"
         */
-    const data = await Products.findOne({ _id: req.params.id });
+    const data = await Products.findOne({ _id: req.params.id }).populate(['category_id','brand_id']);
     res.status(200).send(data);
   },
   update: async (req, res) => {

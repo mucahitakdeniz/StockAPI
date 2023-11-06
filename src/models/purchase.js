@@ -11,14 +11,20 @@ const PurchaseSchema = new mongoose.Schema(
     firm_id: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Firm",
+      required: true
+
     },
     brand_id: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Brand",
+      required: true
+
     },
     product_id: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Product",
+      required: true
+
     },
 
     quantity: {

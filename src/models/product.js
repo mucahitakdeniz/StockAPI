@@ -11,7 +11,7 @@ const ProductsSchema = new mongoose.Schema(
     },
     category_id: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Categories",
+      ref: "Category",
       required: true,
     },
 
@@ -35,4 +35,4 @@ ProductsSchema.pre('init', function (data) {
   data.createds = data.createdAt.toLocaleDateString('tr-tr')
 })
 
-module.exports = mongoose.model("Products", ProductsSchema);
+module.exports = mongoose.model("Product", ProductsSchema);

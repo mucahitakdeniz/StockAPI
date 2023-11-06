@@ -4,7 +4,7 @@ const Sales = require("../models/sale");
 
 module.exports = {
   list: async (req, res) => {
-     /*
+    /*
             #swagger.tags = ["Sales"]
             #swagger.summary = "List Sales"
             #swagger.description = `
@@ -16,7 +16,7 @@ module.exports = {
                 </ul>
             `
         */
-    const data = await res.getModelList(Sales);
+    const data = await res.getModelList(Sales, {}, ["brand_id", "product_id"]);
     res.status(200).send(data);
   },
   create: async (req, res) => {
@@ -36,6 +36,8 @@ module.exports = {
                 }
             }
         */
+
+    req.body.user_id = req.user?._id;
     const data = await Sales.create(req.body);
     res.status(201).send({
       error: false,
@@ -43,11 +45,14 @@ module.exports = {
     });
   },
   read: async (req, res) => {
-      /*
+    /*
             #swagger.tags = ["Sales"]
             #swagger.summary = "Get Single Sale"
         */
-    const data = await Sales.findOne({ _id: req.params.id });
+    const data = await Sales.findOne({ _id: req.params.id }).populate([
+      "brand_id",
+      "product_id",
+    ]);
     res.status(200).send({
       error: false,
       data,
@@ -70,6 +75,7 @@ module.exports = {
                 }
             }
         */
+
     const data = await Sales.updateOne({ _id: req.params.id }, req.body);
     res.status(202).send({
       error: false,

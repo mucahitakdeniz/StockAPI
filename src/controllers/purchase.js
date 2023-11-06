@@ -16,11 +16,17 @@ module.exports = {
                 </ul>
             `
         */
-    const data = await res.getModelList(Purchase);
+    req.body.user_id = req.user?._id;
+
+    const data = await res.getModelList(Purchase, {}, [
+      "firm_id",
+      "brand_id",
+      "product_id",
+    ]);
     res.status(200).send(data);
   },
   create: async (req, res) => {
-     /*
+    /*
             #swagger.tags = ["Purchases"]
             #swagger.summary = "Create Purchase"
             #swagger.parameters['body'] = {
@@ -37,6 +43,8 @@ module.exports = {
                 }
             }
         */
+    req.body.user_id = req.user?._id;
+
     const data = await Purchase.create(req.body);
     res.status(201).send({
       error: false,
@@ -44,11 +52,15 @@ module.exports = {
     });
   },
   read: async (req, res) => {
-     /*
+    /*
             #swagger.tags = ["Purchases"]
             #swagger.summary = "Get Single Purchase"
         */
-    const data = await Purchase.findOne({ _id: req.params.id });
+    const data = await Purchase.findOne({ _id: req.params.id }).populate([
+      "firm_id",
+      "brand_id",
+      "product_id",
+    ]);
     res.status(200).send(data);
   },
   update: async (req, res) => {

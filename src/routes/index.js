@@ -15,7 +15,7 @@ router.use('/product',require('./product'))
 //brands
 router.use('/brands',require('./brand'))
 //categories
-router.use('/categories',require('./category'))
+router.use('/category',require('./category'))
 //token
 router.use('/token',require('./token'))
 //token

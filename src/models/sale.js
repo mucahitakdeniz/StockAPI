@@ -8,7 +8,7 @@ const SaleSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Account",
     },
-    brand_idd: {
+    brand_id: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Brand",
     },
