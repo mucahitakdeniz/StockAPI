@@ -1,6 +1,6 @@
 "use strict";
 
-const Products = require("../models/products");
+const Products = require("../models/product");
 
 module.exports = {
   list: async (req, res) => {
