@@ -11,13 +11,17 @@ router.use('/sales',require('./sale'))
 //purchases
 router.use('/purchases',require('./purchase'))
 //products
-router.use('/products',require('./product'))
+router.use('/product',require('./product'))
 //brands
 router.use('/brands',require('./brand'))
 //categories
 router.use('/categories',require('./category'))
 //token
-router.use('./token',require('./token'))
+router.use('/token',require('./token'))
+//token
+router.use('/token',require('./token'))
+//auth
+router.use('/account/auth',require('./auth'))
 
 
 module.exports=router

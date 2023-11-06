@@ -5,8 +5,8 @@ const Account = require("../models/account");
 module.exports = {
   list: async (req, res) => {
     /*
-            #swagger.tags = ["Users"]
-            #swagger.summary = "List Users"
+            #swagger.tags = ["Account"]
+            #swagger.summary = "List Account"
             #swagger.description = `
                 You can send query with endpoint for search[], sort[], page and limit.
                 <ul> Examples:
@@ -16,13 +16,14 @@ module.exports = {
                 </ul>
             `
         */
-    const data = await res.getModelList(Account);
+    const filters = req.user?.is_superadmin ? {} : { _id: req.user._id };
+    const data = await res.getModelList(Account, filters);
     res.status(200).send(data);
   },
   create: async (req, res) => {
     /*
-            #swagger.tags = ["Users"]
-            #swagger.summary = "Create User"
+            #swagger.tags = ["Account"]
+            #swagger.summary = "Create Account"
             #swagger.parameters['body'] = {
                 in: 'body',
                 required: true,
@@ -47,15 +48,17 @@ module.exports = {
   },
   read: async (req, res) => {
     /*
-            #swagger.tags = ["Users"]
-            #swagger.summary = "Get Single User"
+            #swagger.tags = ["Account"]
+            #swagger.summary = "Get Single Account"
         */
-    const data = await Account.findOne({ _id: req.params.id });
+    const filters = req.user?.is_superadmin ? {_id:req.params.id} : { _id: req.user._id };
+
+    const data = await Account.findOne(filters);
     res.status(200).send(data);
   },
   update: async (req, res) => {
     /*
-            #swagger.tags = ["Users"]
+            #swagger.tags = ["Account"]
             #swagger.summary = "Update User"
             #swagger.parameters['body'] = {
                 in: 'body',
@@ -71,7 +74,11 @@ module.exports = {
         */
     req.body.is_staff = false;
     req.body.is_superadmin = false;
-    const data = await Account.updateOne({ _id: req.params.id }, req.body,{runValidators:true});
+    const filters = req.user?.is_superadmin ? {_id:req.params.id} : { _id: req.user._id };
+
+    const data = await Account.updateOne(filters, req.body, {
+      runValidators: true,
+    });
     res.status(202).send({
       error: false,
       data,
@@ -80,8 +87,8 @@ module.exports = {
   },
   delete: async (req, res) => {
     /*
-            #swagger.tags = ["Users"]
-            #swagger.summary = "Delete User"
+            #swagger.tags = ["Account"]
+            #swagger.summary = "Delete account"
         */
     const data = await Account.deleteOne({ _id: req.params.id }, req.body);
     res.status(data.deletedCount ? 204 : 404).send({

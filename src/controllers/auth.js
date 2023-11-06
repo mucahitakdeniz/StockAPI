@@ -22,21 +22,24 @@ module.exports = {
     const { username, email, password } = req.body;
 
     if ((username || email) && password) {
+
       const user = await Account.findOne({ $or: [{ username }, { email }] });
       if (user.password == passwordEncrypt(password)) {
+
         if (user.is_active) {
           let tokenData = await Token.findOne({ user_id: user._id });
           if (!tokenData) {
+
             tokenData = await Token.create({
               user_id: user._id,
               token: passwordEncrypt(user._id + Date.now()),
             });
-            res.send({
-              errror: false,
-              key: tokenData.token,
-              user,
-            });
           }
+          res.send({
+            error: false,
+            key: tokenData.token,
+            user,
+          });
         } else {
           res.errorStatusCode = 401;
           throw new Error("This account is not active.");
@@ -57,15 +60,15 @@ module.exports = {
             #swagger.description = 'Delete token key.'
         */
     const auth = req.headers?.authorization || null;
-    const tokenKey= auth ? auth.split(' ')[1] : null
-    let result= {}
-    if(tokenKey) {
-      result=await Token.deleteOne({token:tokenKey})
+    const tokenKey = auth ? auth.split(" ")[1] : null;
+    let result = {};
+    if (tokenKey) {
+      result = await Token.deleteOne({ token: tokenKey });
     }
     res.send({
-      error:false,
-      message:'Logout was OK',
-      result
-    })
+      error: false,
+      message: "Logout was OK",
+      result,
+    });
   },
 };

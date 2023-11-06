@@ -11,10 +11,8 @@ const FirmSchema = new Schema(
       unique: true,
     },
     phone: {
-      type: Number,
+      type: String,
       trim: true,
-      required: true,
-      unique: true,
     },
     address: {
       type: String,
@@ -27,7 +25,7 @@ const FirmSchema = new Schema(
     },
   },
   {
-    collection: "firms",
+    collection: "firm",
     timestamps: true,
   }
 );

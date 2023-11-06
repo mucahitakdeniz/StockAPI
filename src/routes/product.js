@@ -1,15 +1,15 @@
 "use strict";
 
 const router = require("express").Router();
-const products = require("../controllers/product");
+const product = require("../controllers/product");
 
-router.route("/").get(products.list).post(products.create);
+router.route("/").get(product.list).post(product.create);
 
 router
   .route("/:id")
-  .get(products.read)
-  .put(products.update)
-  .patch(products.update)
-  .delete(products.delete)
+  .get(product.read)
+  .put(product.update)
+  .patch(product.update)
+  .delete(product.delete)
 
 module.exports=router
