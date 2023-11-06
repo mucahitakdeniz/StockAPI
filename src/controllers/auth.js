@@ -3,7 +3,6 @@
 const Account = require("../models/account");
 const Token = require("../models/token");
 const passwordEncrypt = require("../helpers/passwordEncrypt");
-const { token } = require("morgan");
 
 module.exports = {
   login: async (req, res) => {
@@ -33,7 +32,7 @@ module.exports = {
               token: passwordEncrypt(user._id + Date.now()),
             });
             res.send({
-              errroe: false,
+              errror: false,
               key: tokenData.token,
               user,
             });
@@ -51,5 +50,22 @@ module.exports = {
       throw new Error("Please enter username/email and password.");
     }
   },
-  logout: async (req, res) => {},
+  logout: async (req, res) => {
+    /*
+            #swagger.tags = ["Authentication"]
+            #swagger.summary = "simpleToken: Logout"
+            #swagger.description = 'Delete token key.'
+        */
+    const auth = req.headers?.authorization || null;
+    const tokenKey= auth ? auth.split(' ')[1] : null
+    let result= {}
+    if(tokenKey) {
+      result=await Token.deleteOne({token:tokenKey})
+    }
+    res.send({
+      error:false,
+      message:'Logout was OK',
+      result
+    })
+  },
 };
